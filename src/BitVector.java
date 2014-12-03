@@ -2,17 +2,21 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
 
 
 public class BitVector {
 	public static void main(String[] args) {
 		BitVector b = new BitVector();
-		int []a = {1,2,3,4};
+		int []arr1 = {0,1};
+		int [][]arr2 ={{1,1,1,0,0,0,0,0,0,0},
+				       {2,1,0,1,0,0,0,0,0,0}};
 		PrintWriter fO;
 		try {
 			fO = new PrintWriter(new BufferedWriter(new FileWriter("output.txt")));
-			b.add_vector(a, 4, 4, fO);
+			int n = 4;
+			int max = b.add_vector(arr1, 2, 2*n+1, fO);
+			b.add_number(arr2, 2*n+1, fO);
+			System.out.println(max);
 			fO.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -20,26 +24,99 @@ public class BitVector {
 		}
 		
     }
-	public void add_vector(int[] arr, int n, int max_var, PrintWriter fO){
-		for (int index=0; index < arr.length; index++){
-			if (index == 0){
-				add_two(arr[0], arr[1], max_var+1, n, fO);
-			}else{
-				add_two(max_var, arr[index], max_var+1, n, fO);
+	private void add_number(int[][] a, int n, PrintWriter fO) {
+		// TODO Auto-generated method stub
+//		fO.println("add num");
+		for(int i=0; i < a.length; i++){
+			String s = "";
+			for (int j=1; j<a[i].length; j++){
+				if (a[i][j] == 1){
+					fO.println(a[i][0]*n + j + " 0");
+				} else {
+					fO.println(-a[i][0]*n - j + " 0");
+				}
 			}
 		}
 	}
-	private void add_two(int x, int y, int z, int n, PrintWriter fO) {
-		// TODO Auto-generated method stub
-		String s1="",s2="",s3="",s4 = "";
-		for (int i=0; i<2*n; i++){
-			s1 += String.valueOf(-i) + " ";
-			s2 += String.valueOf(i) + " ";
-			s3 += String.valueOf(-i) + " ";
-			s4 += String.valueOf(i) + " ";
+	public int add_vector(int[] arr, int eq, int n, PrintWriter fO){
+//		fO.println("add vector");
+		int max = arr.length + 1;
+		if (max == 3){
+			add_two(arr[0], arr[1], eq, max, n, fO);
+		}else{
+			for (int index=0; index < arr.length; index++){
+				if (index == 0){
+					add_two(arr[0], arr[1], max+1, max, n, fO);
+					max = max+1;
+				} else if(index == arr.length - 1) {
+					add_two(max, arr[index], eq, max+1, n, fO);
+					max = max+1;
+				} else {
+					add_two(max, arr[index], max+2, max+1, n, fO);
+					max = max+2;
+				}
+			}
 		}
-		s1 += "0"; s2 += "0"; s3 += "0"; s4 += "0";
-		System.out.println(s1);
-		fO.println(s1);fO.println(s2);fO.println(s3);fO.println(s4);
+		return max;
+	}
+	private void add_two(int x, int y, int z, int c, int n, PrintWriter fO) {
+		// TODO Auto-generated method stub
+//		fO.println("add two");
+		xor(x,y,z,c,n,fO);
+		at_least_two(x,y,c,n,fO);
+		other(c,z,n,fO);
+	}
+	private void other(int c, int z, int n, PrintWriter fO) {
+		// TODO Auto-generated method stub
+//		C0 = 0
+//		fO.println("add other");
+		fO.println(String.valueOf(-n*c-1) + " 0");
+//		Cn+1 = Zn+1
+//		fO.println(String.valueOf(-n*c-n-1) + " " + String.valueOf(n*z+n+1) + " 0");
+//		fO.println(String.valueOf(n*c+n+1) + " " + String.valueOf(-n*z-n-1) + " 0");
+	}
+	private void at_least_two(int x, int y, int c, int n, PrintWriter fO) {
+		// TODO Auto-generated method stub
+//		fO.println("add least two");
+		String s = "";
+		for(int i=1; i<n; i++){
+			s = String.valueOf(n*x+i) + " " + String.valueOf(n*y+i) + " " + String.valueOf(-n*c-i-1) + " 0";
+			fO.println(s);
+			s = String.valueOf(-n*x-i) + " " + String.valueOf(-n*y-i) + " " + String.valueOf(n*c+i+1) + " 0";
+			fO.println(s);
+			s = String.valueOf(n*x+i) + " " + String.valueOf(n*c+i) + " " + String.valueOf(-n*c-i-1) + " 0";
+			fO.println(s);
+			s = String.valueOf(-n*x-i) + " " + String.valueOf(-n*c-i) + " " + String.valueOf(n*c+i+1) + " 0";
+			fO.println(s);
+			s = String.valueOf(n*y+i) + " " + String.valueOf(n*c+i) + " " + String.valueOf(-n*c-i-1) + " 0";
+			fO.println(s);
+			s = String.valueOf(-n*y-i) + " " + String.valueOf(-n*c-i) + " " + String.valueOf(n*c+i+1) + " 0";
+			fO.println(s);
+		}
+		fO.println(String.valueOf(-n*x-n) + " 0");
+		fO.println(String.valueOf(-n*y-n) + " 0");
+	}
+	private void xor(int x, int y, int z, int c, int n, PrintWriter fO) {
+		// TODO Auto-generated method stub
+//		fO.println("add xor");
+		String s = "";
+		for(int i=1; i<=n; i++){
+			s = String.valueOf(n*x+i) + " " + String.valueOf(-n*y-i) + " " + String.valueOf(-n*z-i) + " " + String.valueOf(-n*c-i) + " 0";
+			fO.println(s);
+			s = String.valueOf(-n*x-i) + " " + String.valueOf(n*y+i) + " " + String.valueOf(n*z+i) + " " + String.valueOf(n*c+i) + " 0";
+			fO.println(s);
+			s = String.valueOf(-n*x-i) + " " + String.valueOf(n*y+i) + " " + String.valueOf(-n*z-i) + " " + String.valueOf(-n*c-i) + " 0";
+			fO.println(s);
+			s = String.valueOf(n*x+i) + " " + String.valueOf(-n*y-i) + " " + String.valueOf(n*z+i) + " " + String.valueOf(n*c+i) + " 0";
+			fO.println(s);
+			s = String.valueOf(-n*x-i) + " " + String.valueOf(-n*y-i) + " " + String.valueOf(-n*z-i) + " " + String.valueOf(n*c+i) + " 0";
+			fO.println(s);
+			s = String.valueOf(n*x+i) + " " + String.valueOf(n*y+i) + " " + String.valueOf(n*z+i) + " " + String.valueOf(-n*c-i) + " 0";
+			fO.println(s);
+			s = String.valueOf(n*x+i) + " " + String.valueOf(n*y+i) + " " + String.valueOf(-n*z-i) + " " + String.valueOf(n*c+i) + " 0";
+			fO.println(s);
+			s = String.valueOf(-n*x-i) + " " + String.valueOf(-n*y-i) + " " + String.valueOf(n*z+i) + " " + String.valueOf(n*c+i) + " 0";
+			fO.println(s);
+		}
 	}
 }
