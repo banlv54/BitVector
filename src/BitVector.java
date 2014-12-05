@@ -114,7 +114,7 @@ public class BitVector {
 			fO.println(s);
 			s = String.valueOf(n*x+i) + " " + String.valueOf(n*y+i) + " " + String.valueOf(-n*z-i) + " " + String.valueOf(n*c+i) + " 0";
 			fO.println(s);
-			s = String.valueOf(-n*x-i) + " " + String.valueOf(-n*y-i) + " " + String.valueOf(n*z+i) + " " + String.valueOf(-n*c-i) + " 0";
+			s = String.valueOf(-n*x-i) + " " + String.valueOf(-n*y-i) + " " + String.valueOf(n*z+i) + " " + String.valueOf(n*c+i) + " 0";
 			fO.println(s);
 		}
 	}
