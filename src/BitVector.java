@@ -28,7 +28,6 @@ public class BitVector {
 		// TODO Auto-generated method stub
 //		fO.println("add num");
 		for(int i=0; i < a.length; i++){
-			String s = "";
 			for (int j=1; j<a[i].length; j++){
 				if (a[i][j] == 1){
 					fO.println(a[i][0]*n + j + " 0");
@@ -115,7 +114,7 @@ public class BitVector {
 			fO.println(s);
 			s = String.valueOf(n*x+i) + " " + String.valueOf(n*y+i) + " " + String.valueOf(-n*z-i) + " " + String.valueOf(n*c+i) + " 0";
 			fO.println(s);
-			s = String.valueOf(-n*x-i) + " " + String.valueOf(-n*y-i) + " " + String.valueOf(n*z+i) + " " + String.valueOf(n*c+i) + " 0";
+			s = String.valueOf(-n*x-i) + " " + String.valueOf(-n*y-i) + " " + String.valueOf(n*z+i) + " " + String.valueOf(-n*c-i) + " 0";
 			fO.println(s);
 		}
 	}
