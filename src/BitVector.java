@@ -5,8 +5,17 @@ import java.io.PrintWriter;
 
 
 public class BitVector {
+	
+	public int max_index;
+	
+	public BitVector(){
+		max_index = 0;
+	}
 	public static void main(String[] args) {
 		BitVector b = new BitVector();
+		NumberEncode arrayNumber[] = new NumberEncode[3];
+		
+		
 		int []arr1 = {0,1};
 		int [][]arr2 ={{1,1,1,0,0,0,0,0,0,0},
 				       {2,1,0,1,0,0,0,0,0,0}};
@@ -63,58 +72,58 @@ public class BitVector {
 //		fO.println("add two");
 		xor(x,y,z,c,n,fO);
 		at_least_two(x,y,c,n,fO);
-		other(c,z,n,fO);
+		other(c,n,fO);
 	}
-	private void other(int c, int z, int n, PrintWriter fO) {
+	private void other(int c, int n, PrintWriter fO) {
 		// TODO Auto-generated method stub
 //		C0 = 0
 //		fO.println("add other");
-		fO.println(String.valueOf(-n*c-1) + " 0");
+		fO.println((-n*c-1) + " 0");
 //		Cn+1 = Zn+1
-//		fO.println(String.valueOf(-n*c-n-1) + " " + String.valueOf(n*z+n+1) + " 0");
-//		fO.println(String.valueOf(n*c+n+1) + " " + String.valueOf(-n*z-n-1) + " 0");
+//		fO.println((-n*c-n-1) + " " + (n*z+n+1) + " 0");
+//		fO.println((n*c+n+1) + " " + (-n*z-n-1) + " 0");
 	}
 	private void at_least_two(int x, int y, int c, int n, PrintWriter fO) {
 		// TODO Auto-generated method stub
 //		fO.println("add least two");
 		String s = "";
 		for(int i=1; i<n; i++){
-			s = String.valueOf(n*x+i) + " " + String.valueOf(n*y+i) + " " + String.valueOf(-n*c-i-1) + " 0";
+			s = (n*x+i) + " " + (n*y+i) + " " + (-n*c-i-1) + " 0";
 			fO.println(s);
-			s = String.valueOf(-n*x-i) + " " + String.valueOf(-n*y-i) + " " + String.valueOf(n*c+i+1) + " 0";
+			s = (-n*x-i) + " " + (-n*y-i) + " " + (n*c+i+1) + " 0";
 			fO.println(s);
-			s = String.valueOf(n*x+i) + " " + String.valueOf(n*c+i) + " " + String.valueOf(-n*c-i-1) + " 0";
+			s = (n*x+i) + " " + (n*c+i) + " " + (-n*c-i-1) + " 0";
 			fO.println(s);
-			s = String.valueOf(-n*x-i) + " " + String.valueOf(-n*c-i) + " " + String.valueOf(n*c+i+1) + " 0";
+			s = (-n*x-i) + " " + (-n*c-i) + " " + (n*c+i+1) + " 0";
 			fO.println(s);
-			s = String.valueOf(n*y+i) + " " + String.valueOf(n*c+i) + " " + String.valueOf(-n*c-i-1) + " 0";
+			s = (n*y+i) + " " + (n*c+i) + " " + (-n*c-i-1) + " 0";
 			fO.println(s);
-			s = String.valueOf(-n*y-i) + " " + String.valueOf(-n*c-i) + " " + String.valueOf(n*c+i+1) + " 0";
+			s = (-n*y-i) + " " + (-n*c-i) + " " + (n*c+i+1) + " 0";
 			fO.println(s);
 		}
-		fO.println(String.valueOf(-n*x-n) + " 0");
-		fO.println(String.valueOf(-n*y-n) + " 0");
+		fO.println((-n*x-n) + " 0");
+		fO.println((-n*y-n) + " 0");
 	}
 	private void xor(int x, int y, int z, int c, int n, PrintWriter fO) {
 		// TODO Auto-generated method stub
 //		fO.println("add xor");
 		String s = "";
 		for(int i=1; i<=n; i++){
-			s = String.valueOf(n*x+i) + " " + String.valueOf(-n*y-i) + " " + String.valueOf(-n*z-i) + " " + String.valueOf(-n*c-i) + " 0";
+			s = (n*x+i) + " " + (-n*y-i) + " " + (-n*z-i) + " " + (-n*c-i) + " 0";
 			fO.println(s);
-			s = String.valueOf(-n*x-i) + " " + String.valueOf(n*y+i) + " " + String.valueOf(n*z+i) + " " + String.valueOf(n*c+i) + " 0";
+			s = (-n*x-i) + " " + (n*y+i) + " " + (n*z+i) + " " + (n*c+i) + " 0";
 			fO.println(s);
-			s = String.valueOf(-n*x-i) + " " + String.valueOf(n*y+i) + " " + String.valueOf(-n*z-i) + " " + String.valueOf(-n*c-i) + " 0";
+			s = (-n*x-i) + " " + (n*y+i) + " " + (-n*z-i) + " " + (-n*c-i) + " 0";
 			fO.println(s);
-			s = String.valueOf(n*x+i) + " " + String.valueOf(-n*y-i) + " " + String.valueOf(n*z+i) + " " + String.valueOf(n*c+i) + " 0";
+			s = (n*x+i) + " " + (-n*y-i) + " " + (n*z+i) + " " + (n*c+i) + " 0";
 			fO.println(s);
-			s = String.valueOf(-n*x-i) + " " + String.valueOf(-n*y-i) + " " + String.valueOf(-n*z-i) + " " + String.valueOf(n*c+i) + " 0";
+			s = (-n*x-i) + " " + (-n*y-i) + " " + (-n*z-i) + " " + (n*c+i) + " 0";
 			fO.println(s);
-			s = String.valueOf(n*x+i) + " " + String.valueOf(n*y+i) + " " + String.valueOf(n*z+i) + " " + String.valueOf(-n*c-i) + " 0";
+			s = (n*x+i) + " " + (n*y+i) + " " + (n*z+i) + " " + (-n*c-i) + " 0";
 			fO.println(s);
-			s = String.valueOf(n*x+i) + " " + String.valueOf(n*y+i) + " " + String.valueOf(-n*z-i) + " " + String.valueOf(n*c+i) + " 0";
+			s = (n*x+i) + " " + (n*y+i) + " " + (-n*z-i) + " " + (n*c+i) + " 0";
 			fO.println(s);
-			s = String.valueOf(-n*x-i) + " " + String.valueOf(-n*y-i) + " " + String.valueOf(n*z+i) + " " + String.valueOf(n*c+i) + " 0";
+			s = (-n*x-i) + " " + (-n*y-i) + " " + (n*z+i) + " " + (-n*c-i) + " 0";
 			fO.println(s);
 		}
 	}
