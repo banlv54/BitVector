@@ -12,20 +12,27 @@ public class BitVector {
 		max_index = 0;
 	}
 	public static void main(String[] args) {
+		int size = 9;
 		BitVector b = new BitVector();
-		NumberEncode arrayNumber[] = new NumberEncode[3];
-		
-		
-		int []arr1 = {0,1};
-		int [][]arr2 ={{1,1,1,0,0,0,0,0,0,0},
-				       {2,1,0,1,0,0,0,0,0,0}};
+		NumberEncode arrayNumber[] = new NumberEncode[4];
+		arrayNumber[0] = new NumberEncode(0,size);
+		arrayNumber[1] = new NumberEncode(1,size);
+		arrayNumber[2] = new NumberEncode(2,size, 5);
+		arrayNumber[3] = new NumberEncode(3,size, 4);
+		arrayNumber[0].setMaxIndex(4);
 		PrintWriter fO;
 		try {
 			fO = new PrintWriter(new BufferedWriter(new FileWriter("output.txt")));
-			int n = 4;
-			int max = b.add_vector(arr1, 2, 2*n+1, fO);
-			b.add_number(arr2, 2*n+1, fO);
-			System.out.println(max);
+			NumberEncode tmp = new NumberEncode(arrayNumber[0].getMaxIndex(), size);
+//			2a+b = 5
+			tmp.increaseMaxIndex();
+			arrayNumber[0].add(arrayNumber[0], tmp, fO);
+			tmp.add(arrayNumber[1], arrayNumber[2], fO);
+//			a+b=4
+			arrayNumber[0].add(arrayNumber[1], arrayNumber[3], fO);
+			arrayNumber[2].encodeSelf(fO);
+			arrayNumber[3].encodeSelf(fO);
+			
 			fO.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -53,7 +60,7 @@ public class BitVector {
 			add_two(arr[0], arr[1], eq, max, n, fO);
 		}else{
 			for (int index=0; index < arr.length; index++){
-				if (index == 0){
+				if (index == 1){
 					add_two(arr[0], arr[1], max+1, max, n, fO);
 					max = max+1;
 				} else if(index == arr.length - 1) {
