@@ -8,24 +8,47 @@ public class BitVector {
 	
 	public int max_index;
 	
-	public BitVector(){
-		max_index = 0;
-	}
 	public static void main(String[] args) {
-		BitVector b = new BitVector();
 		NumberEncode arrayNumber[] = new NumberEncode[3];
-		
-		
-		int []arr1 = {0,1};
-		int [][]arr2 ={{1,1,1,0,0,0,0,0,0,0},
-				       {2,1,0,1,0,0,0,0,0,0}};
+		NumberEncode arrayNumber1[] = new NumberEncode[2];
+		BitVector bitVector = new BitVector();
 		PrintWriter fO;
+		int size = 9;
 		try {
 			fO = new PrintWriter(new BufferedWriter(new FileWriter("output.txt")));
-			int n = 4;
-			int max = b.add_vector(arr1, 2, 2*n+1, fO);
-			b.add_number(arr2, 2*n+1, fO);
-			System.out.println(max);
+//			NumberEncod - index, size,
+//			NumberEncod - index, size, value
+			
+//			vd: 2a+b=5
+//			a+b=4
+			
+//			arrayNumber = [a,a,b]
+			arrayNumber[0] = new NumberEncode(0, size);
+			arrayNumber[1] = new NumberEncode(1, size);
+			arrayNumber[2] = new NumberEncode(1, size);
+//			arrayNumber1 = [a,b]			
+			arrayNumber1[0] = new NumberEncode(0, size);
+			arrayNumber1[1] = new NumberEncode(1, size);
+
+//			sum1=5
+			NumberEncode sum1 = new NumberEncode(5);
+			sum1.setSize(size);
+//			sum2=4
+			NumberEncode sum2 = new NumberEncode(4);
+			sum2.setSize(size);
+//			sum1 = 2a+b
+			sum1.add(arrayNumber, fO);
+//			sum2=a+b
+			sum2.add(arrayNumber1, fO);
+
+//			Encode cac bien da biet gia tri trong mang
+			bitVector.encodeDecimal(arrayNumber, fO);
+			bitVector.encodeDecimal(arrayNumber1, fO);
+			
+//			Encode 1 bien cu the
+			sum1.encodeSelf(fO);
+			sum2.encodeSelf(fO);
+
 			fO.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -33,6 +56,19 @@ public class BitVector {
 		}
 		
     }
+	private void encodeDecimal(NumberEncode []arr, PrintWriter fO){
+		for (int i=0; i< arr.length; i++){
+			if (arr[i].valueB != ""){
+				arr[i].encodeSelf(fO);
+			}
+		}
+	}
+	
+	
+	
+	
+	
+	
 	private void add_number(int[][] a, int n, PrintWriter fO) {
 		// TODO Auto-generated method stub
 //		fO.println("add num");
