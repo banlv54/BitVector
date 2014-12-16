@@ -30,18 +30,24 @@ public class NumberEncode {
 		this.size = size;
 		this.valueD = valueD;
 		this.valueB = Integer.toBinaryString(valueD);
-		MAX_INDEX += 1;
+		if (index == MAX_INDEX){
+			MAX_INDEX += 1;
+		}
 	}
 	public NumberEncode(int index, int size){
 		this.index = index;
 		this.size = size;
-		MAX_INDEX += 1;
+		if (index == MAX_INDEX){
+			MAX_INDEX += 1;
+		}
 	}
 	public NumberEncode(int index, int size, String valueB){
 		this.index = index;
 		this.size = size;
 		this.valueB = valueB;
-		MAX_INDEX += 1;
+		if (index == MAX_INDEX){
+			MAX_INDEX += 1;
+		}
 	}
 //	set function
 	public void setSize(int size){
@@ -82,6 +88,9 @@ public class NumberEncode {
 	}
 	public int getMaxIndex(){
 		return MAX_INDEX;
+	}
+	public int getIndex(){
+		return index;
 	}
 
 //	generate
@@ -164,7 +173,7 @@ public class NumberEncode {
 	    fO.println((-number2.bit(size)) + " 0");
 	}
 	
-//	this = number2 XOR number3 XOR carry
+//	this = number1 XOR number2 XOR carry
 	private void xor(NumberEncode number1, NumberEncode number2, NumberEncode carry, PrintWriter fO) {
 		// TODO Auto-generated method stub
 		String s = "";
