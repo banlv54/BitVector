@@ -68,7 +68,7 @@ public class NumberEncode {
 	public int[] toArrayBinary(){
 		String []arr = valueB.split("");
 		int res[] = new int[size];
-		for (int i=1; i<arr.length; i++){
+		for (int i=1; i<=arr.length; i++){
 			res[i-1] = Integer.parseInt(arr[arr.length-i]);
 		}
 		for (int i=arr.length; i<size; i++){
